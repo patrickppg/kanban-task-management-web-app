@@ -1,0 +1,202 @@
+#board {
+  align-content: center;
+  background: var(--color-brightness-8);
+  flex: 1;
+  overflow: auto;
+}
+
+@scope (#board) {
+  .container-empty-board {
+    align-items: center;
+    flex-flow: column;
+    gap: 2rem;
+    justify-self: center;
+    max-width: 31rem;
+    text-align: center;
+
+    &:not([hidden]) {
+      display: flex;
+    }
+  }
+
+  .container-non-empty-board {
+    align-items: start;
+    box-sizing: border-box;
+    gap: 1.5rem;
+    height: 100%;
+    overflow: auto;
+    padding: 1.5rem;
+    
+    &:not([hidden]) {
+      display: flex;
+    }
+  }
+
+  .column {
+    display: flex;
+    flex: none;
+    flex-flow: column;
+    gap: 1.25rem;
+    position: relative;
+    width: 17rem;
+  }
+
+  .text-column-name {
+    background: var(--color-brightness-8);
+    inset: 0;
+    color: var(--color-brightness-6);
+    font: var(--font-preset-4);
+    height: 1lh;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .text-empty-board {
+    color: var(--color-brightness-6);
+    font: var(--font-preset-2);
+  }
+
+  .button-add-column {
+    background: var(--color-blue-dark);
+    border: unset;
+    border-radius: 1.5rem;
+    color: var(--color-brightness-10);
+    cursor: pointer;
+    font: var(--font-preset-3);
+    height: 3rem;
+    padding-inline: 1.5rem;
+  }
+
+  .button-create-column {
+    align-items: center;
+    align-self: stretch;
+    background: var(--color-brightness-7);
+    border: unset;
+    border-radius: var(--radius-small);
+    color: var(--color-brightness-6);
+    cursor: pointer;
+    display: flex;
+    flex: none;
+    font: var(--font-preset-1);
+    gap: .5rem;
+    justify-content: center;
+    margin-top: calc(15px + 1.25rem);
+    position: sticky;
+    top: calc(15px + 1.25rem);
+    width: 17rem;
+
+    div:has(> &) {
+      position: relative;
+    }
+  }
+
+  .button-view-task {
+    background: var(--color-brightness-10);
+    border: unset;
+    border-radius: var(--radius-small);
+    box-shadow: 0 4px 6px 0 hsl(220, 40%, 35%, .1);
+    cursor: pointer;
+    display: flex;
+    flex-flow: column;
+    gap: .5rem;
+    padding: 1.5rem 1rem;
+    scroll-margin: 3rem 1rem 1rem;
+    text-align: unset;
+    width: 100%;
+
+    [role="row"] ~ [role="row"] & {
+      scroll-margin-top: 1rem;
+    }
+
+    .text-task-title {
+      color: var(--color-brightness-0);
+      font: var(--font-preset-3);
+    }
+
+    .text-task-subtasks {
+      color: var(--color-brightness-6);
+      font: var(--font-preset-4);
+    }
+  }
+}
+
+#topbar {
+  align-items: center;
+  background: var(--color-brightness-10);
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--color-brightness-7);
+  display: flex;
+  height: 6rem;
+}
+
+@scope (#topbar) {
+  .image-logo {
+    align-self: stretch;
+    border-right: 1px solid var(--color-brightness-7);
+    margin-left: -201px;
+    object-fit: none;
+    object-position: center 46%;
+    transition: margin-left .2s;
+    width: 200px;
+
+    #app:has(#side_panel .container-content:not(:open)) & {
+      margin-left: 0px;
+    }
+  }
+
+  .container-buttons {
+    align-items: center;
+    display: flex;
+    gap: 1.5rem;
+    margin-inline: auto 2rem;
+  }
+
+  .button-add-task {
+    background: var(--color-blue-dark);
+    border: unset;
+    border-radius: 1.5rem;
+    color: var(--color-brightness-10);
+    cursor: pointer;
+    font: var(--font-preset-3);
+    height: 3rem;
+    padding-inline: 1.5rem;
+
+    &:disabled {
+      cursor: unset;
+      opacity: .25;
+    }
+  }
+
+  .button-menu {
+    align-items: center;
+    background: unset;
+    border: unset;
+    color: var(--color-brightness-6);
+    cursor: pointer;
+    display: flex;
+    outline-offset: 5px;
+
+    &:disabled {
+      cursor: unset;
+      opacity: .25;
+    }
+  }
+
+  .option {
+    color: red;
+    font: var(--font-preset-5);
+  }
+
+  .text-board-name {
+    color: var(--color-brightness-1);
+    font: var(--font-preset-1);
+    margin-inline: 1.5rem;
+  }
+}
+
+  .container-board {
+    display: flex;
+    flex: 1;
+    flex-flow: column;
+    overflow: auto;
+  }

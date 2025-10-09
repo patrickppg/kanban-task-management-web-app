@@ -1,0 +1,433 @@
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  font-weight: 700;
+  src: url("/src/assets/fonts/Plus_Jakarta_Sans/static/PlusJakartaSans-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  font-weight: 500;
+  src: url("/src/assets/fonts/Plus_Jakarta_Sans/static/PlusJakartaSans-Medium.ttf");
+}
+
+:root {
+  --color-blue-dark: hsl(242, 48%, 58%);
+  --color-blue-light: hsl(243, 100%, 82%);
+  --color-red-dark: hsl(0, 78%, 63%);
+  --color-red-light: hsl(0, 100%, 80%);
+  --color-brightness-1: black;
+  --color-brightness-2: hsl(237, 100%, 4%);
+  --color-brightness-3: hsl(235, 16%, 15%);
+  --color-brightness-4: hsl(235, 12%, 19%);
+  --color-brightness-5: hsl(236, 11%, 27%);
+  --color-brightness-6: hsl(216, 15%, 57%);
+  --color-brightness-7: hsl(217, 62%, 95%);
+  --color-brightness-8: hsl(218, 73%, 97%);
+  --color-brightness-9: hsl(0, 0%, 100%);
+  --color-brightness-10: white;
+
+  --font-preset-1: 700 1.5rem / 1.25 "Plus Jakarta Sans";
+  --font-preset-2: 700 1.125rem / 1.25 "Plus Jakarta Sans";
+  --font-preset-3: 700 .9375rem / 1.25 "Plus Jakarta Sans";
+  --font-preset-4: 700 .75rem / 1.25 "Plus Jakarta Sans";
+  --font-preset-5: 700 .8125rem / 1.75 "Plus Jakarta Sans";
+
+  --radius-small: 6px;
+  --radius-x-small: 4px;
+  --radius-xx-small: 2px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: unset;
+}
+
+:root {
+  interpolate-size: allow-keywords;
+}
+
+body {
+  margin: unset;
+}
+
+.drop-down {
+  appearance: base-select;
+  background: unset;
+
+  &:open::picker-icon {
+    rotate: 180deg;
+  }
+
+  &::picker-icon {
+    content: url("/public/images/icon-chevron-down.svg");
+  }
+
+  & option {
+    height: 2.5rem;
+    outline: none;
+    padding-inline: 1rem;
+    
+    &:first-of-type {
+      border-radius: var(--radius-x-small) var(--radius-x-small) 0 0;
+    }
+
+    &:last-of-type {
+      border-radius: 0 0 var(--radius-x-small) var(--radius-x-small);
+    }
+
+    &:hover,
+    &:focus {
+      background: var(--color-brightness-8);
+    }
+
+    &::checkmark {
+      content: none;
+    }
+  }
+}
+
+::picker(select) {
+  appearance: base-select;
+  border: 1px solid hsl(216, 15%, 57%, .25);
+  border-radius: var(--radius-x-small);
+  position: fixed;
+  position-try-fallbacks: none;
+}
+
+.popup-menu {
+  background-color: var(--color-brightness-10);
+  border: unset;
+  border-radius: var(--radius-small);
+  color: var(--color-brightness-6);
+  font: var(--font-preset-5);
+  font-weight: 500;
+  list-style: none;
+  margin: unset;
+  padding: unset;
+  position-area: bottom left;
+  width: max-content;
+
+  .menu-item {
+    align-content: center;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: block;
+    height: 2.5rem;
+    outline: unset;
+    padding-inline: 1rem;
+    text-align: start;
+    width: 100%;
+
+    &:hover,
+    &:focus-visible {
+      background: var(--color-brightness-8);
+    }
+
+    &.destructive {
+      color: var(--color-red-dark);
+    }
+  }
+}
+
+/* +---------------+ */
+/* |     MODAL     | */
+/* +---------------+ */
+
+.modal {
+  background: var(--color-brightness-10);
+  border: unset;
+  border-radius: var(--radius-small);
+  box-sizing: border-box;
+  margin: 1rem;
+  max-height: calc(100% - 2rem);
+  max-width: 30rem;
+  padding: 2rem;
+  place-self: center;
+  width: calc(100% - 2rem);
+
+  &::backdrop {
+    background: hsl(0, 0%, 0%, .5);
+  }
+
+  &.view-task {
+    flex-flow: column;
+    max-height: 70%;
+    overflow: clip;
+    
+    &:open {
+      display: flex;
+    }
+  }
+}
+
+@scope (.modal) {
+  .button-add {
+    background: var(--color-brightness-7);
+    border: unset;
+    border-radius: 2.5rem;
+    color: var(--color-blue-dark);
+    cursor: pointer;
+    display: block;
+    font: var(--font-preset-5);
+    height: 2.5rem;
+    margin-top: .75rem;
+    padding: 0 1rem;
+    width: 100%;
+  }
+
+  .button-cancel {
+    background: var(--color-brightness-7);
+    border: unset;
+    border-radius: 2.5rem;
+    color: var(--color-blue-dark);
+    cursor: pointer;
+    flex: 1;
+    font: var(--font-preset-5);
+    height: 2.5rem;
+    padding: 0 1rem;
+  }
+
+  .button-delete {
+    background: var(--color-red-dark);
+    border: unset;
+    border-radius: 2.5rem;
+    color: var(--color-brightness-10);
+    cursor: pointer;
+    flex: 1;
+    font: var(--font-preset-5);
+    height: 2.5rem;
+    padding: 0 1rem;
+  }
+
+  .button-menu {
+    background: unset;
+    border: unset;
+    cursor: pointer;
+    display: flex;
+    margin: unset;
+    padding: .25rem;
+  }
+  
+  .button-submit {
+    background: var(--color-blue-dark);
+    border: unset;
+    border-radius: 2.5rem;
+    color: var(--color-brightness-10);
+    cursor: pointer;
+    display: block;
+    font: var(--font-preset-5);
+    height: 2.5rem;
+    padding: 0 1rem;
+    width: 100%;
+  }
+
+  .button-remove {
+    background: unset;
+    border: unset;
+    cursor: pointer;
+    display: flex;
+    padding: 5px;
+  }
+
+  .checkbox {
+    appearance: none;
+    border: unset;
+    cursor: pointer;
+    inset: 0;
+    margin: unset;
+    outline: unset;
+    padding: unset;
+    position: absolute;
+  }
+
+  .check {
+    border: 1px solid hsl(216, 15%, 57%, .35);
+    height: 1rem;
+    margin: .5rem 0;
+    outline-offset: 4px;
+    transition: background-color .15s, border-color .15s;
+    width: 1rem;
+
+    .container-checkbox:has(:checked) & {
+      background: url("/images/icon-check.svg") center no-repeat, var(--color-blue-dark);
+      border-color: transparent;
+    }
+    
+    .container-checkbox:has(.checkbox:focus-visible) & {
+      outline: auto;
+    }
+  }
+
+  .checkbox-label {
+    margin-block: .5rem;
+    transition: color .15s;
+
+    .container-checkbox:has(:checked) & {
+      color: var(--color-brightness-6);      
+      text-decoration: line-through;
+    }
+  }
+
+  .container-checkbox {
+    align-items: center;
+    background: var(--color-brightness-8);
+    border-radius: var(--radius-small);
+    cursor: pointer;
+    display: flex;
+    font: var(--font-preset-4);
+    gap: 1rem;
+    min-height: 2.5rem;
+    padding-inline: .75rem;
+    position: relative;
+  }
+
+  .container-grid {
+    display: flex;
+    flex-flow: column;
+    gap: .75rem;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  .container-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .container-dropdown {
+    position: relative;
+    
+    .chevron {
+      bottom: calc(1.25rem - 3.5px);
+      position: absolute;
+      right: 1rem;
+    }
+  }
+
+  .container-row {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+  }
+
+  .container-title-menu {
+    align-items: center;
+    display: flex;
+    flex-flow: row-reverse;
+    gap: 4rem;
+  }
+
+  .dropdown {
+    border: 1px solid hsl(216, 15%, 57%, .25);
+    border-radius: var(--radius-x-small);
+    font: var(--font-preset-5);
+    font-weight: 500;
+    height: 2.5rem;
+    padding: .5rem 1rem;
+    width: 100%;
+  }
+
+  .field {
+    display: block;
+    margin-block: 1.5rem;
+
+    &:last-child {
+      margin-bottom: unset;
+    }
+
+    &.subtasks {
+      display: flex;
+      flex: 1;
+      flex-flow: column;
+      overflow: auto;
+    }
+  }
+  
+  .label {
+    color: var(--color-brightness-6);
+    display: block;
+    font: var(--font-preset-4);
+    margin-bottom: .5rem;
+    padding: unset;
+  }
+
+  .textbox {
+    border: 1px solid hsl(216, 15%, 57%, .25);
+    border-radius: var(--radius-x-small);
+    box-sizing: border-box;
+    font: var(--font-preset-5);
+    font-weight: 500;
+    height: 2.5rem;
+    padding: 0 1rem;
+    resize: none;
+
+    &.full {
+      width: 100%;
+    }
+
+    &.flex {
+      flex: 1;
+    }
+
+    &.multiline {
+      height: 7rem;
+      padding-block: .5rem;
+    }
+  }
+
+  .text-confirm {
+    color: var(--color-brightness-6);
+    font: var(--font-preset-5);
+    font-weight: 500;
+    margin-block: 1.5rem;
+  }
+
+  .text-title {
+    font: var(--font-preset-2);
+    margin: unset;
+    flex: 1;
+  }
+
+  .text-description {
+    color: var(--color-brightness-6);
+    font: var(--font-preset-5);
+    font-weight: 500;
+    margin-block: 1.5rem;
+  }
+  
+  .title {
+    font: var(--font-preset-2);
+
+    &.destructive {
+      color: var(--color-red-dark);
+      margin-top: unset;
+    }
+  }
+
+  fieldset {
+    border: unset;
+    margin: unset;
+    padding: unset;
+  }
+}
+
+.cell-column {
+  display: flex;
+  flex: 1;
+}
+
+.cell-subtask {
+  display: flex;
+  flex: 1;
+}
+
+.container-grid-subtasks {
+  border-radius: var(--radius-small);
+  display: flex;
+  flex: 1;
+  flex-flow: column;
+  gap: .5rem;
+  overflow: auto;
+  scrollbar-width: thin;
+}
