@@ -42,21 +42,11 @@
     padding: 2rem 0;
     position: absolute;
     right: 0;
-    transition: visibility .2s;
     z-index: 1;
     width: 18.75rem;
-
-
-    &:open {
-      visibility: visible;
-    }
-
-    &:not(:open) {
-      visibility: hidden;
-    }
   }
 
-  .container-switch {
+  .switch {
     align-items: center;
     background: var(--color-brightness-8);
     border-radius: var(--radius-small);
@@ -66,6 +56,22 @@
     justify-content: center;
     margin-bottom: .5rem;
     margin-inline: 1.5rem;
+
+    &::before {
+      aspect-ratio: 1;
+      background: currentColor;
+      content: "";
+      mask: url("images/icon-light-theme.svg") center / cover;
+      width: 1.1875rem;
+    }
+
+    &::after {
+      aspect-ratio: 1;
+      background: currentColor;
+      content: "";
+      mask: url("images/icon-dark-theme.svg") center / cover;
+      width: 1rem;
+    }
   }
   
   .button-create-board {
@@ -85,6 +91,14 @@
     margin-block: 2px;
     padding-inline-start: 1.5rem;
     width: calc(100% - 1.5rem);
+
+    &::before {
+      aspect-ratio: 1;
+      background: currentColor;
+      content: "";
+      mask: url("images/icon-board.svg") center / cover;
+      width: 1rem;
+    }
   }
 
   .button-hide-sidebar {
@@ -101,6 +115,14 @@
     padding: unset;
     padding-inline-start: 1.5rem;
     width: calc(100% - 1.5rem);
+
+    &::before {
+      aspect-ratio: 1.125;
+      background: currentColor;
+      content: "";
+      mask: url("images/icon-hide-sidebar.svg") center / cover;
+      width: 1.125rem;
+    }
   }
 
   .button-select-board {
@@ -122,9 +144,17 @@
     position: relative;
     width: calc(100% - 1.5rem);
 
-    &.selected {
+    &[aria-selected="true"] {
       background: var(--color-blue-dark);
       color: var(--color-brightness-10);
+    }
+
+    &::before {
+      aspect-ratio: 1;
+      background: currentColor;
+      content: "";
+      mask: url("images/icon-board.svg") center / cover;
+      width: 1rem;
     }
   }
 
@@ -146,30 +176,32 @@
     transform-origin: left;
     transition-property: transform, visibility;
 
+    &::after {
+      aspect-ratio: 1.455;
+      background: currentColor;
+      content: "";
+      mask: url("images/icon-show-sidebar.svg") center / cover;
+      width: 1rem;
+    }
+
     &[hidden] {
       transform: translateX(-100%) scale(0);
       visibility: hidden;
     }
   }
 
-  .switch {
+  .track {
     & {
       aspect-ratio: 2;
+      background: var(--color-blue-dark);
       border-radius: 20px;
       box-sizing: border-box;
       height: 20px;
       isolation: isolate;
       padding: 3px;
       position: relative;
-    }
-
-    .track {
-      background: var(--color-blue-dark);
-      border-radius: inherit;
-      inset: 0;
-      position: absolute;
       transition: background .15s;
-      z-index: -1;
+
     }
 
     .thumb {
@@ -180,7 +212,7 @@
       transition: transform .15s;
       width: 14px;
 
-      .switch:has(.control:checked) & {
+      .track:has(.control:checked) & {
         transform: translateX(1.25rem);
       }
     }
@@ -212,6 +244,10 @@
     outline: none;
     overflow: auto;
     scrollbar-width: thin;
+    
+    &:empty {
+      display: none;
+    }
 
     margin-block: 3px;
   }

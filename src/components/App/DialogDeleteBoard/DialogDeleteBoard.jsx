@@ -1,13 +1,12 @@
-import { useDispatch, useSelector } from "react-redux"
-import Dialog from "../../UI/Dialog/Dialog"
-import { deleteBoard, selectBoardName, selectFirstBoardId } from "../../../features/boards/boardsSlice"
 import { useContext } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { SelectedBoardIdContext } from "../../../contexts/contexts"
+import { deleteBoard, selectBoardName } from "../../../features/boards/boardsSlice"
+import Dialog from "../../UI/Dialog/Dialog"
 
 function DialogDeleteBoard({ isOpen, onCancel, onDelete, onClose }) {
-  const idOfSelectedBoard = useContext(SelectedBoardIdContext)
-  const boardName = useSelector((state) => selectBoardName(state, idOfSelectedBoard))
-  const firstBoardId = useSelector(selectFirstBoardId)
+  const boardId = useContext(SelectedBoardIdContext)
+  const boardName = useSelector((state) => selectBoardName(state, boardId))
   const dispatch = useDispatch()
   
   return (
@@ -18,7 +17,7 @@ function DialogDeleteBoard({ isOpen, onCancel, onDelete, onClose }) {
       </div>
       <div className="container-buttons">
         <button className="button-cancel" onClick={() => onCancel()}>Cancel</button>
-        <button className="button-delete" onClick={() => {onDelete(firstBoardId); dispatch(deleteBoard(idOfSelectedBoard))}}>Delete</button>
+        <button className="button-delete" onClick={() => {dispatch(deleteBoard(boardId)); onDelete()}}>Delete</button>
       </div>
     </Dialog>
   )

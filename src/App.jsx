@@ -47,7 +47,7 @@ function App() {
           <DialogDeleteBoard
             isOpen={isDialogDeleteBoardOpen}
             onCancel={() => setIsDialogDeleteBoardOpen(false)}
-            onDelete={(id) => {setIsDialogDeleteBoardOpen(false); setIdOfSelectedBoard(id)}} 
+            onDelete={() => setIsDialogDeleteBoardOpen(false)} 
             onClose={() => setIsDialogDeleteBoardOpen(false)} />
           <DialogAddTask
             isOpen={isDialogAddTaskOpen}

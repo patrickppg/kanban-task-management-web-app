@@ -40,7 +40,7 @@ export const boardsSlice = createSlice({
     },
 
     deleteBoard(state, action) {
-      const { id } = action.payload
+      const id = action.payload
 
       state.splice(state.findIndex(board => board.id === id), 1)
     },
