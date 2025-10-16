@@ -1,10 +1,10 @@
-import { nanoid } from "nanoid"
 import { useContext, useEffect, useRef, useState } from "react"
-import Dialog from "../../UI/Dialog/Dialog"
-import useGridPattern from "../../../custom hooks/useGridPattern"
-import { useDispatch, useSelector } from "react-redux"
 import { editBoard, selectEditBoardData } from "../../../features/boards/boardsSlice"
 import { SelectedBoardIdContext } from "../../../contexts/contexts"
+import { useDispatch, useSelector } from "react-redux"
+import { nanoid } from "nanoid"
+import Dialog from "../../UI/Dialog/Dialog"
+import useGridPattern from "../../../custom hooks/useGridPattern"
 
 function DialogEditBoard({ isOpen, onClose }) {
   const [name, setName] = useState("")
@@ -12,22 +12,29 @@ function DialogEditBoard({ isOpen, onClose }) {
   const [moveFocusTo, setMoveFocusTo] = useState(null)
   const [deletedColumnIndex, setDeletedColumnIndex] = useState(null)
 
+  const refGrid = useRef(null)
+  const refForm = useRef(null)
+
   const idOfSelectedBoard = useContext(SelectedBoardIdContext)
   const boardData = useSelector((state) => selectEditBoardData(state, idOfSelectedBoard))
   const dispatch = useDispatch()
 
-  const refGrid = useRef(null)
-  
+
+
   function handleAddColumnClick() {
     setColumns([...columns, { id: nanoid(), title: "" }])
     setMoveFocusTo("textbox")
   }
+
+
 
   function handleDeleteColumnClick(id, i) {
     setColumns(columns.filter(column => column.id !== id))
     setMoveFocusTo("button")
     setDeletedColumnIndex(i)
   }
+
+
 
   function handleSubmit(e) {
     const formData = new FormData(e.target)
@@ -46,24 +53,34 @@ function DialogEditBoard({ isOpen, onClose }) {
     setMoveFocusTo(null)
   }
   
+
+
   useEffect(() => {
     setColumns([...(boardData.columns || [] )])
   }, [boardData])
+
+
 
   useEffect(() => {
     setName(boardData.name ?? "")
   }, [boardData])
 
+
+
+  // When a column is created, it becomes focused.
+  // when a column is deleted, focus moves to the adjacent delete button.
   useEffect(() => {
     if (isOpen) {
       if (moveFocusTo) {
+        const form = refForm.current
+        
         if (moveFocusTo === "textbox") {
-          const columnsTextboxes = [...document.querySelector("#form_edit_board").querySelectorAll("[name='column']")]
+          const columnsTextboxes = [...form.querySelectorAll("[name='column']")]
           columnsTextboxes.at(-1).focus()
         }
         else if (moveFocusTo === "button") {
-          const buttonsRemoveColumn = [...document.querySelector("#form_edit_board").querySelectorAll(".button-remove")]
-          const buttonAddColumn = document.querySelector("#form_edit_board").querySelector(".button-add")
+          const buttonsRemoveColumn = [...form.querySelectorAll(".button-remove")]
+          const buttonAddColumn = form.querySelector(".button-add")
 
           if (deletedColumnIndex !== 0) buttonsRemoveColumn[deletedColumnIndex - 1].focus()
           else {
@@ -75,35 +92,81 @@ function DialogEditBoard({ isOpen, onClose }) {
     }
   }, [isOpen, columns, moveFocusTo, deletedColumnIndex])
 
+
+  
   useGridPattern(refGrid, columns)
 
   return (
-    <Dialog isOpen={isOpen} isModal={true} className="modal" closedby="any" aria-label="Edit Board" onClose={() => {onClose(); setMoveFocusTo(null)}}>
+    <Dialog
+      isOpen={isOpen}
+      isModal={true}
+      className="modal"
+      closedby="any"
+      aria-label="Edit Board"
+      onClose={() => {onClose(); setMoveFocusTo(null)}}>
       <div aria-hidden="true" className="title">Edit Board</div>
-      <form id="form_edit_board" method="dialog" onSubmit={handleSubmit}>
+      <form ref={refForm} id="form_edit_board" method="dialog" onSubmit={handleSubmit}>
         <label className="field">
           <span className="label">Name</span>
-          <input className="textbox full" name="name" required pattern="^(?=.*\S).+$" maxLength={20} type="text" value={name} autoComplete="off" onChange={(e) => {setName(e.target.value)}} />
+          <input
+            className="textbox full"
+            name="name"
+            required
+            pattern="^(?=.*\S).+$"
+            maxLength={20}
+            type="text"
+            value={name}
+            autoComplete="off"
+            onChange={(e) => {setName(e.target.value)}} />
         </label>
         <fieldset className="field">
           <legend className="label">Columns</legend>
-          <div ref={refGrid} className="container-grid" role="grid" aria-label="Columns">
+          <div
+            ref={refGrid}
+            className="container-grid"
+            role="grid"
+            aria-label="Columns">
             {columns.map((column, i) => (
               <div className="container-row" key={column.id} role="row">
-                <span className="cell-column" role="gridcell" data-grid-focusable="true">
-                  <input className="textbox flex" name="column" required pattern="^(?=.*\S).+$" maxLength={15} type="text" defaultValue={column.name} autoComplete="off" tabIndex="-1" aria-label={`Column ${i + 1}`} />
+                <span
+                  className="cell-column"
+                  role="gridcell"
+                  data-grid-focusable="true">
+                  <input
+                    className="textbox flex"
+                    name="column"
+                    required
+                    pattern="^(?=.*\S).+$"
+                    maxLength={15}
+                    type="text"
+                    defaultValue={column.name}
+                    autoComplete="off"
+                    tabIndex="-1"
+                    aria-label={`Column ${i + 1}`} />
                 </span>
                 <span role="gridcell">
-                  <button className="button-remove" type="button" aria-label={`Remove Column ${i + 1}`} data-grid-focusable="true" onClick={() => handleDeleteColumnClick(column.id, i)}>
-                    <svg aria-hidden="true" width="15" height="15" xmlns="http://www.w3.org/2000/svg"><g fill="#828FA3" fillRule="evenodd"><path d="m12.728 0 2.122 2.122L2.122 14.85 0 12.728z"/><path d="M0 2.122 2.122 0 14.85 12.728l-2.122 2.122z"/></g></svg>
-                  </button>
+                  <button
+                    className="button-remove"
+                    type="button"
+                    aria-label={`Remove Column ${i + 1}`}
+                    data-grid-focusable="true"
+                    onClick={() => handleDeleteColumnClick(column.id, i)} />
                 </span>
               </div>
             ))}
           </div>
-          <button className="button-add" type="button" onClick={handleAddColumnClick}>Add New Column</button>
+          <button
+            className="button-add"
+            type="button"
+            onClick={handleAddColumnClick}>
+            Add New Column
+          </button>
         </fieldset>
-        <button className="button-submit" type="submit">Save Changes</button>
+        <button
+          className="button-submit"
+          type="submit">
+          Save Changes
+        </button>
       </form>
     </Dialog>
   )

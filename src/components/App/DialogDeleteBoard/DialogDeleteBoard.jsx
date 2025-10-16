@@ -10,14 +10,33 @@ function DialogDeleteBoard({ isOpen, onCancel, onDelete, onClose }) {
   const dispatch = useDispatch()
   
   return (
-    <Dialog isOpen={isOpen} isModal={true} className="modal" closedby="any" role="alertdialog" aria-label="Confirmation" aria-describedby="container_delete_board_message" onClose={onClose}>
+    <Dialog
+      isOpen={isOpen}
+      isModal={true}
+      className="modal"
+      closedby="any"
+      role="alertdialog" 
+      aria-label="Confirmation"
+      aria-describedby="container_delete_board_message"
+      onClose={onClose}>
       <div id="container_delete_board_message">
         <p className="title destructive">Delete this board?</p>
-        <p className="text-confirm">Are you sure you want to delete the '{boardName}' board? This action will remove all columns and tasks and cannot be reversed.</p>
+        <p className="text-confirm">
+          Are you sure you want to delete the '{boardName}' board?
+          This action will remove all columns and tasks and cannot be reversed.
+        </p>
       </div>
       <div className="container-buttons">
-        <button className="button-cancel" onClick={() => onCancel()}>Cancel</button>
-        <button className="button-delete" onClick={() => {dispatch(deleteBoard(boardId)); onDelete()}}>Delete</button>
+        <button
+          className="button-cancel"
+          onClick={() => onCancel()}>
+          Cancel
+        </button>
+        <button
+          className="button-delete"
+          onClick={() => {dispatch(deleteBoard(boardId)); onDelete()}}>
+          Delete
+        </button>
       </div>
     </Dialog>
   )

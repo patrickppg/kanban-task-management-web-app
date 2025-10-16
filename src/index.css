@@ -199,12 +199,21 @@ body {
   }
 
   .button-menu {
+    align-items: center;
     background: unset;
     border: unset;
+    color: var(--color-brightness-6);
     cursor: pointer;
     display: flex;
-    margin: unset;
-    padding: .25rem;
+    padding: .5rem;
+    
+    &::after {
+      aspect-ratio: 1 / 4;
+      background: currentColor;
+      content: "";
+      mask: url("images/icon-vertical-ellipsis.svg") center / contain no-repeat;
+      width: .3125rem;
+    }
   }
   
   .button-submit {
@@ -226,6 +235,14 @@ body {
     cursor: pointer;
     display: flex;
     padding: 5px;
+
+    &::after {
+      aspect-ratio: 1;
+      background: #828FA3;
+      content: "";
+      mask: url("images/icon-cross.svg") center / cover;
+      width: .9375rem;
+    }
   }
 
   .checkbox {

@@ -88,6 +88,14 @@
     div:has(> &) {
       position: relative;
     }
+
+    &::before {
+      aspect-ratio: 1;
+      background: currentColor;
+      content: "";
+      mask: url("images/icon-add-task-mobile.svg") center / cover;
+      width: .75rem;
+    }
   }
 
   .button-view-task {
@@ -100,7 +108,7 @@
     flex-flow: column;
     gap: .5rem;
     padding: 1.5rem 1rem;
-    scroll-margin: 3rem 1rem 1rem;
+    scroll-margin: 4rem 1rem 1rem;
     text-align: unset;
     width: 100%;
 
@@ -174,11 +182,19 @@
     color: var(--color-brightness-6);
     cursor: pointer;
     display: flex;
-    outline-offset: 5px;
+    padding: .5rem;
 
     &:disabled {
       cursor: unset;
       opacity: .25;
+    }
+
+    &::after {
+      aspect-ratio: 1 / 4;
+      background: currentColor;
+      content: "";
+      mask: url("images/icon-vertical-ellipsis.svg") center / cover;
+      width: .3125rem;
     }
   }
 

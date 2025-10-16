@@ -10,14 +10,33 @@ function DialogDeleteTask({ isOpen, onDelete, onCancel, onClose }) {
   const dispatch = useDispatch()
   
   return (
-    <Dialog isOpen={isOpen} isModal={true} className="modal" closedby="any" role="alertdialog" aria-label="Confirmation" aria-describedby="container_delete_task_message" onClose={onClose}>
+    <Dialog
+      isOpen={isOpen}
+      isModal={true}
+      className="modal"
+      closedby="any"
+      role="alertdialog"
+      aria-label="Confirmation"
+      aria-describedby="container_delete_task_message"
+      onClose={onClose}>
       <div id="container_delete_task_message">
         <p className="title destructive">Delete this task?</p>
-        <p className="text-confirm">Are you sure you want to delete the '{taskTitle}' task and its subtasks? This action cannot be reversed.</p>
+        <p className="text-confirm">
+          Are you sure you want to delete the '{taskTitle}' task and its subtasks?
+          This action cannot be reversed.
+        </p>
       </div>
       <div className="container-buttons">
-        <button className="button-cancel" onClick={() => onCancel()}>Cancel</button>
-        <button className="button-delete" onClick={() => {onDelete(); dispatch(deleteTask(idOfSelectedTask))}}>Delete</button>
+        <button
+          className="button-cancel"
+          onClick={() => onCancel()}>
+          Cancel
+        </button>
+        <button
+          className="button-delete"
+          onClick={() => {onDelete(); dispatch(deleteTask(idOfSelectedTask))}}>
+          Delete
+        </button>
       </div>
     </Dialog>
   )
